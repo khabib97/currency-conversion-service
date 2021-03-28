@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 //old 
 //@FeignClient(name="currency-exchange", url="localhost:8000")
-//new
+//new using eureka
 @FeignClient(name="currency-exchange")
 public interface CurrencyExchangeProxy {
 
