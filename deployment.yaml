@@ -4,7 +4,7 @@ metadata:
   annotations:
     deployment.kubernetes.io/revision: "1"
   creationTimestamp: "2021-04-06T10:19:06Z"
-  generation: 1
+  generation: 2
   labels:
     app: currency-conversion
   managedFields:
@@ -93,7 +93,7 @@ metadata:
   uid: 21ba0652-13c4-4538-a92f-e148aec79a97
 spec:
   progressDeadlineSeconds: 600
-  replicas: 2
+  replicas: 1
   revisionHistoryLimit: 10
   selector:
     matchLabels:
@@ -113,9 +113,12 @@ spec:
       - image: khabib97/currency-conversion-service:0.0.3-SNAPSHOT
         imagePullPolicy: IfNotPresent
         name: currency-conversion-service
-        env:
-          - name: CURRENCY_EXCHANGE_URI
-            value: http://currency-exchange
+#       env:
+#         - name: CURRENCY_EXCHANGE_URI
+#           value: http://currency-exchange
+        envFrom:
+          - configMapRef:
+              name: currency-conversion
         resources: {}
         terminationMessagePath: /dev/termination-log
         terminationMessagePolicy: File
@@ -143,6 +146,69 @@ status:
   readyReplicas: 1
   replicas: 1
   updatedReplicas: 1
+---
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: "2021-04-07T10:00:19Z"
+  labels:
+    app: currency-conversion
+  managedFields:
+  - apiVersion: v1
+    fieldsType: FieldsV1
+    fieldsV1:
+      f:status:
+        f:loadBalancer:
+          f:ingress: {}
+    manager: kube-vpnkit-forwarder
+    operation: Update
+    time: "2021-04-07T10:00:19Z"
+  - apiVersion: v1
+    fieldsType: FieldsV1
+    fieldsV1:
+      f:metadata:
+        f:labels:
+          .: {}
+          f:app: {}
+      f:spec:
+        f:externalTrafficPolicy: {}
+        f:ports:
+          .: {}
+          k:{"port":8100,"protocol":"TCP"}:
+            .: {}
+            f:port: {}
+            f:protocol: {}
+            f:targetPort: {}
+        f:selector:
+          .: {}
+          f:app: {}
+        f:sessionAffinity: {}
+        f:type: {}
+    manager: kubectl-expose
+    operation: Update
+    time: "2021-04-07T10:00:19Z"
+  name: currency-conversion
+  namespace: default
+  resourceVersion: "791821"
+  selfLink: /api/v1/namespaces/default/services/currency-conversion
+  uid: 7da57686-5fcc-41fa-b035-7a4730855d7c
+spec:
+  clusterIP: 10.111.235.102
+  externalTrafficPolicy: Cluster
+  ports:
+  - nodePort: 30791
+    port: 8100
+    protocol: TCP
+    targetPort: 8100
+  selector:
+    app: currency-conversion
+  sessionAffinity: None
+  type: LoadBalancer
+status:
+  loadBalancer:
+    ingress:
+    - hostname: localhost
+
 ---
 apiVersion: v1
 data:
