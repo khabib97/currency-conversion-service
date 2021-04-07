@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.old.school.microservices</groupId>
 	<artifactId>currency-conversion-service</artifactId>
-	<version>0.0.2-SNAPSHOT</version> <!-- change-kubernetes -->
+	<version>0.0.3-SNAPSHOT</version> <!-- change-kubernetes -->
 	<name>currency-conversion-service-kubernetes</name> <!-- change-kubernetes -->
 	<description>Spring Boot Currency Conversion service</description>
 	<properties>
