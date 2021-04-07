@@ -110,7 +110,7 @@ spec:
         app: currency-conversion
     spec:
       containers:
-      - image: khabib97/currency-conversion-service:0.0.2-SNAPSHOT
+      - image: khabib97/currency-conversion-service:0.0.3-SNAPSHOT
         imagePullPolicy: IfNotPresent
         name: currency-conversion-service
         resources: {}
